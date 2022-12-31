@@ -25,4 +25,12 @@ export class EmplpyeeDetailsComponent implements OnInit {
     )
   }
 
+  changeEmployeeStatus(){
+    this.employeeService.changeStatus(this.employee).subscribe(
+    data=>{
+      this.employee=data
+      console.log(data)
+    }
+    )
+  }
 }

@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Employee} from "./Employee";
 import {HttpClient, HttpHeaders, HttpParams, HttpRequest} from '@angular/common/http';
+import {Observable} from "rxjs";
 
 // const headerDict = {
 //   headers: new HttpHeaders(
@@ -49,8 +50,18 @@ export class EmployeeServiceService {
     return this.http.get<Employee>
     ('http://localhost:8080/employee/fetchById/'+id)
   }
-  fetchEmployeeWithStatus(){
-    return this.http.get<Employee[]>
-    ('http://localhost:8080/employee/fetchById/')
+  fetchEmployeeWithStatus(status:string){
+   if (status=="BLOCKED"){
+     return this.http.get<Employee[]>
+     ('http://localhost:8080/employee/getEmployeeByStatus/BLOCKED')
+   }else{
+     return this.http.get<Employee[]>
+     ('http://localhost:8080/employee/getEmployeeByStatus/UN_BLOCKED')
+   }
+  }
+
+  changeStatus(employee:Employee):Observable<Employee>{
+    return this.http.post<Employee>
+    ('http://localhost:8080/blockEmployee',employee)
   }
 }
