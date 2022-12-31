@@ -62,7 +62,12 @@ export class EmployeeServiceService {
 
   changeStatus(employee:Employee):Observable<Employee>{
     console.log(employee)
-    return this.http.post<Employee>
-    ('http://localhost:8080/employee/blockEmployee',employee)
+   if (employee.status=="UN_BLOCKED"){
+     return this.http.post<Employee>
+     ('http://localhost:8080/employee/blockEmployee',employee)
+   }else{
+     return this.http.post<Employee>
+     ('http://localhost:8080/employee/unBlockEmployee',employee)
+   }
   }
 }
