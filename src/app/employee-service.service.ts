@@ -27,7 +27,7 @@ export class EmployeeServiceService {
     ('http://localhost:8080/employee/fetchAll')
   }
 
-  fetchEmployeeWithId(){
+  fetchEmployeeWithId(id:number){
     // let httpRequest: { headers: HttpHeaders; method: string; body: {}; url: string } = {
     //   method: 'GET',
     //   body : {'id':1},
@@ -47,6 +47,10 @@ export class EmployeeServiceService {
     // };
     // console.log(options)
     return this.http.get<Employee>
-    ('http://localhost:8080/employee/fetchById/1')
+    ('http://localhost:8080/employee/fetchById/'+id)
+  }
+  fetchEmployeeWithStatus(){
+    return this.http.get<Employee[]>
+    ('http://localhost:8080/employee/fetchById/')
   }
 }
