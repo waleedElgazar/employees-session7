@@ -22,5 +22,17 @@ export class ShowBlockedComponent implements OnInit{
       }
     )
   }
+  changeEmployeeStatus(name:string){
+    let idx=this.employeeService.findEmployee(this.employees,name)
+    console.log("index ",idx)
+    let emp=this.employees[idx];
+    console.log("object",emp)
+    this.employeeService.changeStatus(emp).subscribe(
+      data=>{
+        this.employees[idx]=data
+        console.log(data)
+      }
+    )
+  }
 
 }

@@ -23,12 +23,12 @@ export class EmployeeServiceService {
   constructor(private http: HttpClient) {
   }
 
-  fetchAllEmployee(){
+  fetchAllEmployee() {
     return this.http.get<Employee[]>
     ('http://localhost:8080/employee/fetchAll')
   }
 
-  fetchEmployeeWithId(id:number){
+  fetchEmployeeWithId(id: number) {
     // let httpRequest: { headers: HttpHeaders; method: string; body: {}; url: string } = {
     //   method: 'GET',
     //   body : {'id':1},
@@ -48,26 +48,48 @@ export class EmployeeServiceService {
     // };
     // console.log(options)
     return this.http.get<Employee>
-    ('http://localhost:8080/employee/fetchById/'+id)
-  }
-  fetchEmployeeWithStatus(status:string){
-   if (status=="BLOCKED"){
-     return this.http.get<Employee[]>
-     ('http://localhost:8080/employee/getEmployeeByStatus/BLOCKED')
-   }else{
-     return this.http.get<Employee[]>
-     ('http://localhost:8080/employee/getEmployeeByStatus/UN_BLOCKED')
-   }
+    ('http://localhost:8080/employee/fetchById/' + id)
   }
 
-  changeStatus(employee:Employee):Observable<Employee>{
+  fetchEmployeeWithStatus(status: string) {
+    if (status == "BLOCKED") {
+      return this.http.get<Employee[]>
+      ('http://localhost:8080/employee/getEmployeeByStatus/BLOCKED')
+    } else {
+      return this.http.get<Employee[]>
+      ('http://localhost:8080/employee/getEmployeeByStatus/UN_BLOCKED')
+    }
+  }
+
+  changeStatus(employee: Employee): Observable<Employee> {
     console.log(employee)
-   if (employee.status=="UN_BLOCKED"){
-     return this.http.post<Employee>
-     ('http://localhost:8080/employee/blockEmployee',employee)
-   }else{
-     return this.http.post<Employee>
-     ('http://localhost:8080/employee/unBlockEmployee',employee)
-   }
+    if (employee.status == "UN_BLOCKED") {
+      return this.http.post<Employee>
+      ('http://localhost:8080/employee/blockEmployee', employee)
+    } else {
+      return this.http.post<Employee>
+      ('http://localhost:8080/employee/unBlockEmployee', employee)
+    }
+  }
+
+  findEmployeeWithId(employees: Employee[], toSearch: string): number {
+    console.log(employees)
+    let x = employees.findIndex(
+      emp => {
+        emp.name === "toSearch"
+      }
+    )
+    console.log("from find list " + x)
+    return x;
+  }
+
+  findEmployee(employees: Employee[], name: string): number {
+    for (let i = 0; i < employees.length; i++) {
+      if (employees[i].name == name) {
+        console.log("index is",i)
+        return i
+      }
+    }
+    return -1;
   }
 }
